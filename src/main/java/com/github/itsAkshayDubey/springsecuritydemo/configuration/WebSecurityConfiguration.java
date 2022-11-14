@@ -2,10 +2,13 @@ package com.github.itsAkshayDubey.springsecuritydemo.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class WebSecurityConfiguration {
@@ -30,4 +33,16 @@ public class WebSecurityConfiguration {
 	public JdbcUserDetailsManager jdbcUserDetailsManager() {
 		return new JdbcUserDetailsManager(dataSource);
 	}*/
+	
+	@Bean
+	@Order(2)
+	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+		httpSecurity.authorizeRequests()
+		.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+		.anyRequest().authenticated();
+		
+		httpSecurity.httpBasic();
+		
+		return httpSecurity.build();
+	}
 }
