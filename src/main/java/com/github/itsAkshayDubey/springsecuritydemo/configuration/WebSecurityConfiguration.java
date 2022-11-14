@@ -23,4 +23,11 @@ public class WebSecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 
+	/*@Autowired
+	private DataSource dataSource;
+	
+	@Bean
+	public JdbcUserDetailsManager jdbcUserDetailsManager() {
+		return new JdbcUserDetailsManager(dataSource);
+	}*/
 }
