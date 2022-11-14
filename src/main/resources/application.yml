@@ -3,3 +3,7 @@ spring:
     user:
       name: test
       password: test
+      
+  h2:
+    console:
+      enabled: true
