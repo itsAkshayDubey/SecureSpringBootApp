@@ -52,7 +52,8 @@ public class WebSecurityConfiguration {
 		.antMatchers("/mylogin","/h2-console/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/mylogin").defaultSuccessUrl("/hello", true);
+		.formLogin().loginPage("/mylogin").defaultSuccessUrl("/hello", true)
+		.and().rememberMe().key("mykey");
 
 		return httpSecurity.build();
 	}
