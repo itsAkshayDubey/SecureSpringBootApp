@@ -12,3 +12,12 @@ spring:
     url: jdbc:h2:mem:mydb
     username: admin
     password: admin
+    
+server:
+  ssl:
+    key-store-password: tomcat
+    key-store: classpath:mykeystore.p12
+    key-store-type: PKCS12
+    key-alias: tomcat
+
+  port: 8443
