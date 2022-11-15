@@ -53,7 +53,8 @@ public class WebSecurityConfiguration {
 		.anyRequest().authenticated()
 		.and()
 		.formLogin().loginPage("/mylogin").defaultSuccessUrl("/hello", true)
-		.and().rememberMe().key("mykey");
+		.and().rememberMe().key("mykey")
+		.and().logout().logoutUrl("/logout").logoutSuccessUrl("/mylogin").deleteCookies("remember-me");
 
 		return httpSecurity.build();
 	}
