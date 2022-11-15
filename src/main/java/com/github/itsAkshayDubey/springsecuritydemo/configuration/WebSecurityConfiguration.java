@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -41,11 +42,17 @@ public class WebSecurityConfiguration {
 	@Bean
 	@Order(2)
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-		httpSecurity.authorizeRequests()
+		/*httpSecurity.authorizeRequests()
 		.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 		.anyRequest().authenticated();
 
-		httpSecurity.httpBasic();
+		httpSecurity.httpBasic();*/
+		
+		httpSecurity.authorizeRequests()
+		.antMatchers("/mylogin","/h2-console/**").permitAll()
+		.anyRequest().authenticated()
+		.and()
+		.formLogin().loginPage("/mylogin");
 
 		return httpSecurity.build();
 	}
@@ -75,5 +82,10 @@ public class WebSecurityConfiguration {
 		digestAuthenticationFilter.setUserDetailsService(jdbcUserDetailsManager());
 		digestAuthenticationFilter.setAuthenticationEntryPoint(authenticationEntryPoint());
 		return digestAuthenticationFilter;
+	}
+	
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().antMatchers("/css/**","/webjars/**");
 	}
 }
