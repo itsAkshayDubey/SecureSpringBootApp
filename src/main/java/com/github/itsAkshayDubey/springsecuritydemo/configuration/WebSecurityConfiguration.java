@@ -52,7 +52,7 @@ public class WebSecurityConfiguration {
 		.antMatchers("/mylogin","/h2-console/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/mylogin");
+		.formLogin().loginPage("/mylogin").defaultSuccessUrl("/hello", true);
 
 		return httpSecurity.build();
 	}
